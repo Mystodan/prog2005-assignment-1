@@ -1,15 +1,29 @@
 package handler
 
-type Language struct {
-	Lang_code string `json:"lang_code"`
-	Lang_name string `json:"lang_name"`
+type countryName struct {
+	Name string `json:"common"`
+}
+type openStreetMap struct {
+	Map string `json:"openStreetMaps"`
+}
+
+type getUnii struct {
+	Country  string   `json:"country"` // Suppress field in JSON output if it is empty
+	Alpha_2  string   `json:"alpha_two_code"`
+	Name     string   `json:"name"`
+	Webpages []string `json:"web_pages"`
+}
+type getCountry struct {
+	Name      countryName       `json:"name"`
+	Languages map[string]string `json:"languages"`
+	Maps      openStreetMap     `json:"maps"`
 }
 
 type Universities struct {
-	Name      string     `json:"name"`
-	Country   string     `json:"country,omitempty"` // Suppress field in JSON output if it is empty
-	Isocode   string     `json:"code"`
-	Webpages  []string   `json:"webpages"`
-	Languages []Language `json:"languages"`
-	Map       string     `json:"map"`
+	Name      string            `json:"name"`
+	Country   string            `json:"country"` // Suppress field in JSON output if it is empty
+	Isocode   string            `json:"isocode"`
+	Webpages  []string          `json:"webpages"`
+	Languages map[string]string `json:"languages"`
+	Map       string            `json:"map"`
 }

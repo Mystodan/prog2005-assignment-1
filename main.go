@@ -8,8 +8,8 @@ import (
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.NEIGHBOURUNIS_PATH) + `">Neighbouring universities</a><br>`))
 	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.UNIINFO_PATH) + `">University info</a><br>`))
+	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.NEIGHBOURUNIS_PATH) + `">Neighbouring universities</a><br>`))
 	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.DIAG_PATH) + `">Diagnostics interface</a><br>`))
 
 }
@@ -38,8 +38,8 @@ func main() {
 	// Set up handler endpoints
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH, homePage)
 	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
-	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.NEIGHBOURUNIS_PATH, handler.LocationHandler)
-	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.UNIINFO_PATH, handler.CollectionHandler)
+	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.UNIINFO_PATH, handler.UniinfoHandler)
+	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.NEIGHBOURUNIS_PATH, handler.CollectionHandler)
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.DIAG_PATH, handler.CollectionHandler)
 
 	handleRequests(getPort())
