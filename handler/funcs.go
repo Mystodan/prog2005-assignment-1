@@ -16,15 +16,20 @@ func checkError(inn error) {
 	}
 }
 
+func getBordering(inn []Universities) []Universities {
+
+	return inn
+}
+
 func setUniversity(inn []getUnii) []Universities {
 	var lastCountry string
 	var universities []Universities
 	var country []getCountry
 	for _, s := range inn {
 		var body []byte
-		if s.Country != lastCountry {
-			lastCountry = s.Country
-			write, err := http.Get("https://restcountries.com/v3.1/name/" + lastCountry)
+		if s.Alpha_2 != lastCountry {
+			lastCountry = s.Alpha_2
+			write, err := http.Get("https://restcountries.com/v3.1/alpha?codes=" + lastCountry)
 			checkError(err)
 			ret, err := io.ReadAll(write.Body)
 			checkError(err)
