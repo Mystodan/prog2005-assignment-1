@@ -26,8 +26,8 @@ func getPort() string {
 }
 
 func main() {
-	handler.TimerStart()
 	setPort("") // default port is :8080
+	handler.TimerStart()
 	// Set up handler endpoints
 	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.UNIINFO_PATH, handler.UniinfoHandler)
