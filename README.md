@@ -1,4 +1,5 @@
 # Assignment 1: Context-sensitive University Search Service
+By Daniel Hao Huynh
 
 ## Overview
 
