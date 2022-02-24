@@ -7,24 +7,6 @@ import (
 	"os"
 )
 
-func handleRequests(port string) {
-
-	log.Fatal(http.ListenAndServe(":"+port, nil))
-}
-func setPort(inn string) {
-	os.Setenv("PORT", inn)
-}
-
-func getPort() string {
-	// Handle port assignment (either based on environment variable, or local override)
-	port := os.Getenv("PORT")
-	if port == "" {
-		log.Println("$PORT has not been set. Default: 8080")
-		port = "8080"
-	}
-	return port
-}
-
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
