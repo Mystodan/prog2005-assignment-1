@@ -142,7 +142,6 @@ func setUniversity(inn []getUnii) []Universities {
 			json.Unmarshal(ret, &tempCoun)
 			country = append(country, tempCoun...)
 		}
-
 		for j := range country {
 			if country[j].Isocode == s.Alpha_2 {
 				isoCode = j
@@ -157,7 +156,6 @@ func setUniversity(inn []getUnii) []Universities {
 			Languages: country[isoCode].Languages,
 			Map:       country[isoCode].Maps.Map,
 		})
-
 	}
 	return universities
 }
