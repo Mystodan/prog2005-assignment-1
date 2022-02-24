@@ -28,12 +28,20 @@ func checkError(inn error) {
 	}
 }
 
+/**	Get issues a GET to the specified URL.
+ *	@param inn - URL
+ */
 func getURL(inn string) *http.Response {
 	ret, err := http.Get(inn)
 	checkError(err)
 	return ret
 }
 
+/**	Gets bordering countries iso codes to the targeted university.
+ *  and returns their iso codes in one string
+ *	@param inn - targeted university
+ *	@return isocodes f.ex."NO,RU,DE"
+ */
 func getBorderingIsos(inn []Universities) string {
 	var lastIso, allIso string
 	var allIsoArr []string
@@ -60,6 +68,10 @@ func getBorderingIsos(inn []Universities) string {
 
 	return allIso
 }
+
+/**	takes in alpha/iso codes and gets their info and returns it.
+ *	@param inn - iso codes f.ex."NO,RU,DE"
+ */
 func getBorderingNames(inn string) ([]string, []getCountry) {
 	var country []getCountry
 	var names []string
@@ -74,6 +86,13 @@ func getBorderingNames(inn string) ([]string, []getCountry) {
 	return names, country
 }
 
+/**	takes in a university and returns a list of universities from neighbouring countries.
+ *  @see getBorderingNames(inn string)
+ *  @see getBorderingIsos(inn []Universities)
+ *	@param inn - targeted university
+ *	@param limit - the limit for amount of universities to be printed per country.
+ *  @return AllBorderingUniversities - all bordering universities
+ */
 func getBorderingUniversities(target []Universities, limit int) []Universities {
 	var AllBorderingUniversities []Universities
 	var BorderUnii []getUnii
@@ -127,6 +146,11 @@ func getBorderingUniversities(target []Universities, limit int) []Universities {
 	return AllBorderingUniversities
 }
 
+/**	takes incomplete data for universities, and returns a list of universities.
+ *	Compiled data from GET_UNI and GET_CNTR APIs
+ *	@param inn - data from GET_UNI
+ *  @return universities - a list of universities compiled from two APIs
+ */
 func setUniversity(inn []getUnii) []Universities {
 	var lastCountry string
 	var universities []Universities
