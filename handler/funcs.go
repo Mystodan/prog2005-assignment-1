@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -65,7 +64,6 @@ func getBorderingUniversities(target []Universities, limit int) []Universities {
 	var BorderUnii []getUnii
 	var BorderIso []getCountry
 	BorderingNat := getBorderingNames(getBorderingIso(target))
-	fmt.Println(BorderingNat)
 	writeIso, err := http.Get("https://restcountries.com/v3.1/alpha?codes=" + getBorderingIso(target))
 	checkError(err)
 	bI, err := io.ReadAll(writeIso.Body)
@@ -84,7 +82,6 @@ func getBorderingUniversities(target []Universities, limit int) []Universities {
 		BorderUnii = append(BorderUnii, tempBU...)
 	}
 
-	fmt.Println(BorderUnii)
 	for i := range BorderUnii {
 		for j, _ := range BorderIso {
 			if BorderIso[j].Isocode == BorderUnii[i].Alpha_2 {
