@@ -26,7 +26,11 @@ func getPort() string {
 }
 
 func main() {
-	setPort("") // default port is :8080
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Println("$PORT has not been set. Default: 8080")
+		port = "8080"
+	}
 	handler.TimerStart()
 	// Set up handler endpoints
 	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
@@ -34,5 +38,6 @@ func main() {
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.NEIGHBOURUNIS_PATH, handler.NBuinfoHandler)
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.DIAG_PATH, handler.DiagHandler)
 
-	handleRequests(getPort())
+	log.Println("Starting server on port " + port + " ...")
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
