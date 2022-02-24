@@ -1,10 +1,10 @@
 package main
 
 import (
+	"assignment-1/handler"
 	"log"
 	"net/http"
 	"os"
-	"restfultest/handler"
 )
 
 func handleRequests(port string) {
