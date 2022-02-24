@@ -30,7 +30,7 @@ type Universities struct {
 	Map       string            `json:"map"`
 }
 
-type Dialogue struct {
+type Diagnostics struct {
 	UniversityAPI string `json:"universitiesapi"`
 	CountriesAPI  string `json:"countriesapi"`
 	Version       string `json:"version"`
