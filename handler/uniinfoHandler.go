@@ -27,7 +27,6 @@ func UniGetRequest(w http.ResponseWriter, r *http.Request) {
 	urlSplit := strings.Split(r.URL.Path, "/")
 	var urlWant int
 	comp := strings.ReplaceAll(UNIINFO_PATH, "/", "")
-	//fmt.Println(urlSplit, ":", urlSplit[len(urlSplit)-1], ":", len(urlSplit))
 	for i, s := range urlSplit {
 		if s == (comp) {
 			urlWant = i + 1
@@ -36,25 +35,27 @@ func UniGetRequest(w http.ResponseWriter, r *http.Request) {
 
 	lastAppendVal := strings.ReplaceAll(urlSplit[urlWant], " ", "%20")
 	if len(lastAppendVal) > 0 {
-		lastAppendVal = "=" + lastAppendVal
+		write := getURL(GET_UNI + UNI_REQ + lastAppendVal)
+
+		var getU []getUnii
+		body, err := io.ReadAll(write.Body)
+
+		checkError(err)
+		json.Unmarshal(body, &getU)
+		// Write content type header (best practice)
+		w.Header().Add("content-type", "application/json")
+
+		// Instantiate encoder
+		encoder := json.NewEncoder(w)
+
+		// Encode specific content --> Alternative: "err := json.NewEncoder(w).Encode(location)"
+		err = encoder.Encode(setUniversity(getU))
+		if err != nil {
+			http.Error(w, "Error during encoding", http.StatusInternalServerError)
+			return
+		}
+	} else {
+		http.Error(w, "No functionality without parameters: uniinfo/{:partial_or_complete_university_name}/", http.StatusOK)
 	}
-	write, err := http.Get("http://universities.hipolabs.com/search?name" + lastAppendVal)
-	checkError(err)
-	var getU []getUnii
-	body, err := io.ReadAll(write.Body)
 
-	checkError(err)
-	json.Unmarshal(body, &getU)
-	// Write content type header (best practice)
-	w.Header().Add("content-type", "application/json")
-
-	// Instantiate encoder
-	encoder := json.NewEncoder(w)
-
-	// Encode specific content --> Alternative: "err := json.NewEncoder(w).Encode(location)"
-	err = encoder.Encode(setUniversity(getU))
-	if err != nil {
-		http.Error(w, "Error during encoding", http.StatusInternalServerError)
-		return
-	}
 }

@@ -7,13 +7,6 @@ import (
 	"restfultest/handler"
 )
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.UNIINFO_PATH) + `">University info</a><br>`))
-	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.NEIGHBOURUNIS_PATH) + `lmao">Neighbouring universities</a><br>`))
-	w.Write([]byte(`<a href="` + (handler.RESOURCE_ROOT_PATH + handler.DIAG_PATH) + `">Diagnostics interface</a><br>`))
-
-}
-
 func handleRequests(port string) {
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
@@ -33,14 +26,13 @@ func getPort() string {
 }
 
 func main() {
+	handler.TimerStart()
 	setPort("") // default port is :8080
-
 	// Set up handler endpoints
-	http.HandleFunc(handler.RESOURCE_ROOT_PATH, homePage)
 	http.HandleFunc(handler.DEFAULT_PATH, handler.EmptyHandler)
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.UNIINFO_PATH, handler.UniinfoHandler)
 	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.NEIGHBOURUNIS_PATH, handler.NBuinfoHandler)
-	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.DIAG_PATH, handler.CollectionHandler)
+	http.HandleFunc(handler.RESOURCE_ROOT_PATH+handler.DIAG_PATH, handler.DiagHandler)
 
 	handleRequests(getPort())
 }

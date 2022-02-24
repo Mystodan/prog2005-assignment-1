@@ -23,9 +23,16 @@ type getCountry struct {
 
 type Universities struct {
 	Name      string            `json:"name"`
-	Country   string            `json:"country"` // Suppress field in JSON output if it is empty
+	Country   string            `json:"country"`
 	Isocode   string            `json:"isocode"`
 	Webpages  []string          `json:"webpages"`
 	Languages map[string]string `json:"languages"`
 	Map       string            `json:"map"`
+}
+
+type Dialogue struct {
+	UniversityAPI string `json:"universitiesapi"`
+	CountriesAPI  string `json:"countriesapi"`
+	Version       string `json:"version"`
+	Uptime        string `json:"uptime"`
 }
