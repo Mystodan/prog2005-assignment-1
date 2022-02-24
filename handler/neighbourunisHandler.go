@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -52,10 +51,17 @@ func NBGetRequest(w http.ResponseWriter, r *http.Request) {
 	}
 	write, err := http.Get("http://universities.hipolabs.com/search?name" + secondAppendVal + "&country" + firstAppendVal)
 	checkError(err)
-	//getParam, err := strconv.Atoi()
-	checkError(err)
-	targetSize, _ := strconv.ParseInt(strings.Split(r.URL.RawQuery, "=")[1], 10, 0)
-	fmt.Println(targetSize) //if size = 0 set to default.
+
+	var getLimit int64
+	getParam := strings.Split(r.URL.RawQuery, "limit=")
+	if len(getParam) > 1 {
+		t, _ := strconv.ParseInt(getParam[1], 10, 0)
+		getLimit = t
+	}
+
+	if getLimit == 0 {
+		//fmt.Println(getLimit) //if size = 0 set to default.
+	}
 	var getU []getUnii
 	body, err := io.ReadAll(write.Body)
 
@@ -66,8 +72,12 @@ func NBGetRequest(w http.ResponseWriter, r *http.Request) {
 
 	// Instantiate encoder
 	encoder := json.NewEncoder(w)
+	var setUni []Universities
+	setUni = append(setUni, setUniversity(getU)...)
+	setUni = append(setUni, getBorderingUniversities(setUni, int(getLimit))...)
 
 	// Encode specific content --> Alternative: "err := json.NewEncoder(w).Encode(location)"
-	err = encoder.Encode(setUniversity(getU))
+	err = encoder.Encode(setUni)
 	checkError(err)
+
 }
