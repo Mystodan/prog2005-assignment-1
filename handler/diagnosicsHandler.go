@@ -7,8 +7,7 @@ import (
 )
 
 func getWebStatus(inn string) string {
-	stats, err := http.Get(inn)
-	checkError(err)
+	stats := getURL(inn)
 	return stats.Status
 }
 
