@@ -56,10 +56,10 @@ func NBGetRequest(w http.ResponseWriter, r *http.Request) {
 
 		write := getURL(GET_UNI + UNI_REQ + secondAppendVal + "&country" + firstAppendVal) // gets value from api
 
-		var getLimit int64
-		getParam := strings.Split(r.URL.RawQuery, "limit=") // query for optional parameter
-		if len(getParam) > 1 {                              // if parameter there is a parameter
-			t, _ := strconv.ParseInt(getParam[1], 10, 0) // convert to int
+		var getLimit int
+		getParam := strings.Split(strings.Split(r.URL.RawQuery, "limit=")[1], "/")[0] // query for optional parameter
+		if len(getParam) > 0 {                                                        // if parameter there is a parameter
+			t, _ := strconv.Atoi(getParam) // convert to int
 			getLimit = t
 		}
 
